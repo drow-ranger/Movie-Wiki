@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrolling_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/content_margin">
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/movie_information"
+            style="@style/TextTitle"
+            android:text="@string/information"
+            android:textColor="@android:color/primary_text_light" />
+
+        <RelativeLayout style="@style/detailsLayout">
+
+            <ImageView
+                android:id="@+id/iv_overview"
+                android:src="@drawable/ic_information"
+                style="@style/detailImage" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_overview_title"
+                style="@style/TextTitle1"
+                android:layout_toRightOf="@id/iv_overview"
+                android:layout_marginStart="@dimen/content_margin"
+                android:text="@string/overview"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_movie_overview"
+                style="@style/TextBody"
+                android:layout_toRightOf="@+id/iv_overview"
+                android:layout_below="@+id/tv_overview_title"
+                android:layout_marginStart="@dimen/content_margin"
+                android:text="@string/overview"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light" />
+
+        </RelativeLayout>
+
+        <View style="@style/detailsView" />
+
+        <RelativeLayout style="@style/detailsLayout">
+
+            <ImageView
+            android:id="@+id/iv_other"
+            android:src="@drawable/ic_other"
+            style="@style/detailImage" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_genre_title"
+                style="@style/TextTitle1"
+                android:layout_toRightOf="@id/iv_other"
+                android:layout_marginStart="@dimen/content_margin"
+                android:text="@string/genre"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light"/> /
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_genre"
+                style="@style/TextBody"
+                android:layout_toRightOf="@+id/iv_other"
+                android:layout_below="@+id/tv_genre_title"
+                android:layout_marginStart="@dimen/content_margin"
+                android:text="@string/genre"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_production_companies_title"
+                style="@style/TextTitle1"
+                android:layout_toRightOf="@id/iv_other"
+                android:layout_below="@id/tv_genre"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"
+                android:text="@string/production_companies"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light"/> /
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_production_companies"
+                style="@style/TextBody"
+                android:layout_toRightOf="@+id/iv_other"
+                android:layout_below="@+id/tv_production_companies_title"
+                android:layout_marginStart="@dimen/content_margin"
+                android:text="@string/production_companies"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light" />
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_status_title"
+                style="@style/TextTitle1"
+                android:layout_toRightOf="@id/iv_other"
+                android:layout_below="@id/tv_production_companies"
+                android:layout_marginStart="@dimen/content_margin"
+                android:layout_marginTop="@dimen/content_margin"
+                android:text="@string/status"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light"/> /
+
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/tv_status"
+                style="@style/TextBody"
+                android:layout_toRightOf="@+id/iv_other"
+                android:layout_below="@+id/tv_status_title"
+                android:layout_marginStart="@dimen/content_margin"
+                android:text="@string/status"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@android:color/primary_text_light" />
+        </RelativeLayout>
+
+        <View style="@style/detailsView" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
