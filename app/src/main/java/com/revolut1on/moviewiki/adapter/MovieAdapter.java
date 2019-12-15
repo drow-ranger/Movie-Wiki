@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.revolut1on.moviewiki.DetailActivity;
 import com.revolut1on.moviewiki.R;
 import com.revolut1on.moviewiki.model.movies.MoviesItem;
+import com.revolut1on.moviewiki.ui.detail.DetailActivity;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -53,7 +53,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
         movie_title = movieList.get(i).getOriginalTitle();
         movie_release_date = dateTime.toString("dd MMMM yyyy");
-        ;
 
         viewHolder.tv_movie_title.setText(movie_title);
         viewHolder.tv_movie_release_date.setText(movie_release_date);
@@ -89,9 +88,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        int clickedDataItem = movieList.get(pos).getId();
+                        MoviesItem clickedDataItem = movieList.get(pos);
                         Intent intent = new Intent(mContext, DetailActivity.class);
-                        intent.putExtra("movieId", clickedDataItem);
+                        intent.putExtra("movies", clickedDataItem );
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                     }

@@ -16,4 +16,9 @@
     <string name="genre">Genre</string>
     <string name="production_companies">Production Companies</string>
     <string name="status">Status</string>
+    <string name="movies">Movies</string>
+    <string name="tvshow">TV Show</string>
+    <string name="settings">Settings</string>
+    <string name="total_vote_count">Total Vote Count</string>
+    <string name="no_data_receive">No Data Receive</string>
 </resources>

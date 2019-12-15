@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".DetailActivity">
+    tools:context=".ui.detail.DetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -22,11 +22,12 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="370dp"
                 android:orientation="vertical"
-                app:layout_collapseMode="parallax">
+                app:layout_collapseMode="parallax"
+                android:background="@android:color/transparent">
 
                 <ImageView
                     android:id="@+id/iv_movie_backdrop"
@@ -34,7 +35,11 @@
                     android:layout_height="350dp"
                     android:layout_alignParentTop="true"
                     android:contentDescription="@string/movie_backdrop"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@android:color/transparent"/>
 
                 <View
                     android:id="@+id/movie_background"
@@ -42,91 +47,84 @@
                     android:layout_height="120dp"
                     android:layout_alignParentBottom="true"
                     android:alpha="0.8"
-                    android:background="@color/colorPrimaryDark" />
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_movie_backdrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/iv_movie_backdrop" />
 
                 <ImageView
                     android:id="@+id/iv_movie_poster"
                     android:layout_width="110dp"
                     android:layout_height="150dp"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:layout_marginTop="200dp"
+                    android:layout_marginTop="215dp"
                     android:contentDescription="@string/movie_poster"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="@+id/movie_background"
+                    app:layout_constraintHorizontal_bias="0.053"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_movie_backdrop" />
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tv_movie_title"
                     style="@style/TextTitle"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:layout_marginTop="255dp"
-                    android:layout_toEndOf="@+id/iv_movie_poster"
-                    android:layout_toRightOf="@+id/iv_movie_poster"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="16dp"
                     android:maxLines="2"
+                    app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                    app:layout_constraintTop_toTopOf="@+id/movie_background"
                     tools:text="@string/movie_title" />
 
-                <LinearLayout
-                    android:id="@+id/movie_rating_layout"
-                    android:layout_width="match_parent"
+                <com.willy.ratingbar.ScaleRatingBar
+                    android:id="@+id/rb_movie_vote_average"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/tv_movie_title"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:layout_marginTop="@dimen/grid_item_margin"
-                    android:layout_toEndOf="@+id/iv_movie_poster"
-                    android:layout_toRightOf="@+id/iv_movie_poster"
-                    android:orientation="vertical">
+                    android:layout_marginStart="28dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
+                    app:srb_clearRatingEnabled="false"
+                    app:srb_clickable="false"
+                    app:srb_drawableEmpty="@drawable/ic_star_empty"
+                    app:srb_drawableFilled="@drawable/ic_star_filled"
+                    app:srb_isIndicator="false"
+                    app:srb_numStars="10"
+                    app:srb_scrollable="false"
+                    app:srb_starHeight="15dp"
+                    app:srb_starPadding="1dp"
+                    app:srb_starWidth="15dp"
+                    app:srb_stepSize="0.5"></com.willy.ratingbar.ScaleRatingBar>
 
-                    <com.willy.ratingbar.ScaleRatingBar
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/rb_movie_vote_average"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srb_numStars="10"
-                        app:srb_starWidth="15dp"
-                        app:srb_starHeight="15dp"
-                        app:srb_starPadding="1dp"
-                        app:srb_stepSize="0.5"
-                        app:srb_isIndicator="false"
-                        app:srb_clickable="false"
-                        app:srb_scrollable="false"
-                        app:srb_clearRatingEnabled="false"
-                        app:srb_drawableEmpty="@drawable/ic_star_empty"
-                        app:srb_drawableFilled="@drawable/ic_star_filled">
-                    </com.willy.ratingbar.ScaleRatingBar>
-
-
-                    <me.grantland.widget.AutofitTextView
-                        android:id="@+id/tv_movie_vote_count"
-                        style="@style/TextBody"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="start"
-                        android:text="@string/vote_count" />
-
-                </LinearLayout>
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/tv_movie_vote_count"
+                    style="@style/TextBody"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="start"
+                    android:text="@string/vote_count"
+                    android:layout_marginStart="28dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/rb_movie_vote_average" />
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tv_movie_popularity"
-                    style="@style/TextBody"
-                    android:layout_below="@+id/movie_rating_layout"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:layout_toEndOf="@+id/iv_movie_poster"
-                    android:layout_toRightOf="@+id/iv_movie_poster"
+                    style="@style/TextBody1"
                     android:maxLines="2"
-                    android:text="@string/popularity" />
+                    android:text="@string/popularity"
+                    android:layout_marginStart="28dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_vote_count"/>
 
                 <me.grantland.widget.AutofitTextView
                     android:id="@+id/tv_movie_release_date"
                     style="@style/TextDate"
-                    android:layout_below="@+id/tv_movie_popularity"
-                    android:layout_marginStart="@dimen/content_margin"
-                    android:layout_toEndOf="@+id/iv_movie_poster"
-                    android:layout_toRightOf="@+id/iv_movie_poster"
                     android:maxLines="2"
-                    android:text="@string/release_date" />
+                    android:text="@string/release_date"
+                    android:layout_marginStart="28dp"
+                    app:layout_constraintStart_toEndOf="@+id/iv_movie_poster"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_popularity"/>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"

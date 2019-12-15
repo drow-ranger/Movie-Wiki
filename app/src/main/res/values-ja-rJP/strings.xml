@@ -1,2 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Movie Wiki</string>
+    <string name="noApi">APIキーが見つかりません。 チェックしてください。</string>
+    <string name="errorFetchingData">データの取得エラー</string>
+    <string name="error">エラー</string>
+    <string name="refresh">リフレッシュ</string>
+    <string name="movie_backdrop">映画の背景</string>
+    <string name="movie_poster">映画のポスター</string>
+    <string name="vote_count">投票数</string>
+    <string name="information">情報</string>
+    <string name="popularity">人気</string>
+    <string name="movie_title">映画のタイトル</string>
+    <string name="release_date">発売日</string>
+    <string name="overview">概要</string>
+    <string name="other">その他</string>
+    <string name="genre">ジャンル</string>
+    <string name="production_companies">制作会社</string>
+    <string name="status">状態</string>
+    <string name="movies">映画</string>
+    <string name="tvshow">テレビ番組</string>
+    <string name="settings">設定</string>
+    <string name="total_vote_count">総投票数</string>
+    <string name="no_data_receive">データ受信なし</string>
+</resources>

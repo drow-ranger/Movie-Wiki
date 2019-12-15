@@ -13,11 +13,11 @@ import java.util.List;
  * Visit https://revolut1on.com
  */
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class TabPagerAdapter extends FragmentPagerAdapter {
     List<Fragment> fragmentList = new ArrayList<>();
     List<String> titleList = new ArrayList<>();
 
-    public ViewPagerAdapter(FragmentManager manager){
+    public TabPagerAdapter(FragmentManager manager){
         super(manager);
     }
 

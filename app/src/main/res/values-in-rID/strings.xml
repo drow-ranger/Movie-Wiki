@@ -1,2 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Movie Wiki</string>
+    <string name="noApi">Kunci API Tidak Ditemukan. Tolong Cek.</string>
+    <string name="errorFetchingData">Kesalahan Mengambil Data</string>
+    <string name="error">Kesalahan</string>
+    <string name="refresh">Menyegarkan</string>
+    <string name="movie_backdrop">Latar Belakang Film</string>
+    <string name="movie_poster">Poster Film</string>
+    <string name="vote_count">Penghitungan Suara</string>
+    <string name="information">Informasi</string>
+    <string name="popularity">Popularitas</string>
+    <string name="movie_title">Judul Film</string>
+    <string name="release_date">Tanggal Rilis</string>
+    <string name="overview">Ikhtisar</string>
+    <string name="other">Lainnya</string>
+    <string name="genre">Aliran</string>
+    <string name="production_companies">Perusahaan Produksi</string>
+    <string name="status">Status</string>
+    <string name="movies">Films</string>
+    <string name="tvshow">Acara TV</string>
+    <string name="settings">Pengaturan</string>
+    <string name="total_vote_count">Total Penghitungan Suara</string>
+    <string name="no_data_receive">Tidak Ada Data Diterima</string>
+</resources>

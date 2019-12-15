@@ -1,111 +1,129 @@
 package com.revolut1on.moviewiki.ui.tvshow;
 
-import android.content.Context;
-import android.net.Uri;
+import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.revolut1on.moviewiki.BuildConfig;
 import com.revolut1on.moviewiki.R;
+import com.revolut1on.moviewiki.adapter.TvShowAdapter;
+import com.revolut1on.moviewiki.api.BaseApiService;
+import com.revolut1on.moviewiki.api.UtilsApi;
+import com.revolut1on.moviewiki.model.tvshows.TvShowsItem;
+import com.revolut1on.moviewiki.model.tvshows.TvShowsResponse;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TvShowFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TvShowFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class TvShowFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String TAG = "TV Show Fragment";
 
-    private OnFragmentInteractionListener mListener;
+    @BindView(R.id.pbLoading)
+    ProgressBar pbLoading;
+    @BindView(R.id.rvTvShow)
+    RecyclerView rvTvShow;
+
+    BaseApiService mApiService;
+    TvShowAdapter mTvShowAdapter;
+    ProgressDialog mProgressDialog;
+
+    private List<TvShowsItem> tvShowList = new ArrayList<>();
 
     public TvShowFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TvShowFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TvShowFragment newInstance(String param1, String param2) {
-        TvShowFragment fragment = new TvShowFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static TvShowFragment newInstance() {
+        return new TvShowFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@Nullable LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv_show, container, false);
+        View root = inflater.inflate(R.layout.fragment_tv_show, container, false);
+        ButterKnife.bind(this, root);
+        mApiService = UtilsApi.getAPIService();
+        initView();
+        loadMovie();
+
+        return root;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+    private void initView(){
+        mTvShowAdapter = new TvShowAdapter(getActivity(), tvShowList);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvTvShow.setLayoutManager(new LinearLayoutManager(getActivity()));
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            rvTvShow.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         }
+
+        rvTvShow.setItemAnimator(new DefaultItemAnimator());
+        rvTvShow.setHasFixedSize(true);
+        rvTvShow.setAdapter(mTvShowAdapter);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+    private void loadMovie() {
+        pbLoading.setVisibility(View.VISIBLE);
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        try {
+            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
+                Toast.makeText(getContext(), R.string.noApi, Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+                return;
+            }
+
+            Call<TvShowsResponse> call = mApiService.getPopularTvShows(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+            call.enqueue(new Callback<TvShowsResponse>() {
+                @Override
+                public void onResponse(Call<TvShowsResponse> call, Response<TvShowsResponse> response) {
+                    List<TvShowsItem> movies = response.body().getResults();
+                    Collections.sort(movies, TvShowsItem.BY_NAME_ALPHABETICAL);
+                    rvTvShow.setAdapter(new TvShowAdapter(getActivity(), movies));
+                    rvTvShow.smoothScrollToPosition(0);
+                    mTvShowAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(Call<TvShowsResponse> call, Throwable t) {
+                    Log.d(String.valueOf(R.string.error), t.getMessage());
+                    Toast.makeText(getActivity(), R.string.errorFetchingData, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Log.d(String.valueOf(R.string.error), e.getMessage());
+            Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        pbLoading.setVisibility(View.GONE);
     }
 }

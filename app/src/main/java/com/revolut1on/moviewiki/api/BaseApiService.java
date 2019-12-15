@@ -2,6 +2,7 @@ package com.revolut1on.moviewiki.api;
 
 import com.revolut1on.moviewiki.model.movie.MovieResponse;
 import com.revolut1on.moviewiki.model.movies.MoviesResponse;
+import com.revolut1on.moviewiki.model.tvshows.TvShowsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,6 +17,9 @@ import retrofit2.http.Query;
 public interface BaseApiService {
     @GET("movie/popular")
     Call<MoviesResponse> getPopularMovies(@Query("api_key") String apiKey);
+
+    @GET("tv/popular")
+    Call<TvShowsResponse> getPopularTvShows(@Query("api_key") String apiKey);
 
     @GET("movie/top_rated")
     Call<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
